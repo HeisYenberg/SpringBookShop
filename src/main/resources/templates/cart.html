@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Корзина</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<th:block th:include="fragments/nav-bar.html"></th:block>
+<div class="container">
+    <h2 class="text-center">Корзина</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Обложка</th>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Общая цена</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItems}">
+            <td>
+                <img alt="Обложка книги"
+                     class="img-fluid"
+                     style="max-width: 100px; max-height: 150px;"
+                     th:src="@{'/images/' + ${item.book.imageName}}">
+            </td>
+            <td th:text="${item.book.title}">Название</td>
+            <td th:text="${item.book.price}">Цена</td>
+            <td>
+                <form method="post" th:action="@{/updateCartItemQuantity}">
+                    <input name="bookId" th:value="${item.book.id}"
+                           type="hidden"/>
+                    <div class="pagination">
+                        <button class="page-link custom-pagination-link"
+                                name="action"
+                                type="submit" value="decrement">-
+                        </button>
+                        <label class="page-link"
+                               th:text="${item.quantity}"></label>
+                        <button class="page-link custom-pagination-link"
+                                name="action"
+                                type="submit" value="increment">+
+                        </button>
+                    </div>
+                </form>
+            </td>
+            <td th:text="${item.book.price * item.quantity}">Общая цена</td>
+            <td>
+                <form method="post"
+                      th:action="@{/removeFromCart/{itemId}(itemId=${item.book.id})}">
+                    <button class="btn btn-danger btn-sm" type="submit">
+                        <i class="bi bi-trash3-fill"></i> Удалить
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-right d-flex justify-content-between align-items-center">
+        <a class="btn btn-success mr-2" href="#">Оформить заказ</a>
+        <span class="total-sum">Общая сумма: <span th:text="${totalSum}"></span></span>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
