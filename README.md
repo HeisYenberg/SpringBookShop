@@ -1,6 +1,6 @@
-# SpringBookShop: Book Shop Management System
+# Spring Book Shop: Book Shop Management System
 
-SpringBookShop is a comprehensive bookshop management system developed using Spring Boot, Spring Security, Thymeleaf, Spring Data JPA, and Docker. It provides a robust platform for managing books and cart functionalities for users, with specialized admin roles for book management.
+Spring Book Shop is a comprehensive bookshop management system developed using Spring Boot, Spring Security, Thymeleaf, Spring Data JPA, and Docker. It provides a robust platform for managing books and cart functionalities for users, with specialized admin roles for book management.
 
 ## Features
 
