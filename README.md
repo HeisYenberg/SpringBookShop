@@ -29,7 +29,7 @@ and cart functionalities for users, with specialized admin roles for book manage
 - Create environment file, with the following command.
 
 ```bash
-cp .env.example.example .env.example
+cp .env.example .env.example
 ```
 
 - Update data if needed.
