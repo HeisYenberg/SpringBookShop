@@ -17,18 +17,39 @@ management using Spring Security.
 
 - Java 8 or later.
 - Maven for building the project.
-- PostgreSQL database for data storage.
+- PostgreSQL database for data storage. 
+- Docker and Docker Compose (for containerized setup).
 
 
-## Database Setup
+## Setting Up the Application with Docker
 
-1. Install PostgreSQL on your local machine or server.
-2. Create a new database for your application, run `schema.sql` script.
-3. Fill the database with data by running `data.sql` script.
-4. Configure the database connection in your `application.properties` file 
-   with the following settings:
+- Clone this repository to your local machine.
+- Navigate to the project root directory.
+- Run the application with Docker Compose: This setup uses Docker Compose to manage both the Spring Boot application and PostgreSQL database.
+- Start the containers:
+- Run the following command to start the Spring Boot application and PostgreSQL database in Docker containers:
 
-```spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+```bash
+docker-compose up
+```
+
+## Running the Application Manually (Without Docker)
+
+If you prefer to run the application without Docker:
+
+- Install PostgreSQL and create a new database called spring_book.
+- Run the data.sql script to set up the database schema and initial data.
+- Set up your local database connection in application.properties:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/spring_book
+spring.datasource.username=postgres
+spring.datasource.password=postgres
 spring.jpa.hibernate.ddl-auto=update
+```
+
+- Use Maven to build and run the application:
+
+```bash
+mvn clean package spring-boot:run
+```
