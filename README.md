@@ -1,33 +1,43 @@
 # Spring Book Shop: Book Shop Management System
 
-Spring Book Shop is a comprehensive bookshop management system developed using Spring Boot, Spring Security, Thymeleaf, Spring Data JPA, and Docker. It provides a robust platform for managing books and cart functionalities for users, with specialized admin roles for book management.
+Spring Book Shop is a comprehensive bookshop management system developed using Spring Boot, Spring
+Security, Thymeleaf, Spring Data JPA, and Docker. It provides a robust platform for managing books
+and cart functionalities for users, with specialized admin roles for book management.
 
 ## Features
 
-- User Authentication and Session Management: Secure user login and session 
-management using Spring Security.
-- Cart Management: Users can add books to their cart, view cart contents, and 
+- User Authentication and Session Management: Secure user login and session
+  management using Spring Security.
+- Cart Management: Users can add books to their cart, view cart contents, and
   proceed to checkout.
-- Book Management: Admin roles have the ability to add, edit, and remove 
+- Book Management: Admin roles have the ability to add, edit, and remove
   books from the inventory.
-- Database Management: Utilizes Spring Data JPA for database interactions, 
+- Database Management: Utilizes Spring Data JPA for database interactions,
   with support for PostgreSQL.
 
 ## Prerequisites
 
 - Java 8 or later.
 - Maven for building the project.
-- PostgreSQL database for data storage. 
+- PostgreSQL database for data storage.
 - Docker and Docker Compose (for containerized setup).
-
 
 ## Setting Up the Application with Docker
 
 - Clone this repository to your local machine.
 - Navigate to the project root directory.
-- Run the application with Docker Compose: This setup uses Docker Compose to manage both the Spring Boot application and PostgreSQL database.
+- Create environment file, with the following command.
+
+```bash
+cp .env.example.example .env.example
+```
+
+- Update data if needed.
+- Run the application with Docker Compose: This setup uses Docker Compose to manage both the Spring
+  Boot application and PostgreSQL database.
 - Start the containers:
-- Run the following command to start the Spring Boot application and PostgreSQL database in Docker containers:
+- Run the following command to start the Spring Boot application and PostgreSQL database in Docker
+  containers:
 
 ```bash
 docker-compose up
