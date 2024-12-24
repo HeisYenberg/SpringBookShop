@@ -36,7 +36,7 @@ public class CartItemsController {
                         item -> item.getBook().getPrice() * item.getQuantity())
                 .sum();
         model.addAttribute("totalSum", totalSum);
-        return "/cart";
+        return "cart";
     }
 
     @PostMapping("/addToCart/{item}")
