@@ -1,6 +1,6 @@
 package com.heisyenberg.springbookshop.controllers;
 
-import com.heisyenberg.springbookshop.dtos.UserDTO;
+import com.heisyenberg.springbookshop.dtos.UserDto;
 import com.heisyenberg.springbookshop.models.User;
 import com.heisyenberg.springbookshop.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +24,21 @@ public class UsersController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("userDTO") UserDTO userDTO) {
+    public String registrationPage(@ModelAttribute("userDto") UserDto userDto) {
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registration(
-            @Valid @ModelAttribute("userDTO") UserDTO userDTO,
+            @Valid @ModelAttribute("userDto") UserDto userDto,
             BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return "registration";
         }
         try {
-            usersService.register(new User(userDTO));
+            usersService.register(new User(userDto));
         } catch (DataIntegrityViolationException e) {
-            bindingResult.addError(new FieldError("userDTO", "email",
+            bindingResult.addError(new FieldError("userDto", "email",
                     "Данная почта уже зарегистрирована"));
             return "registration";
         }

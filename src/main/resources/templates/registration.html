@@ -26,26 +26,26 @@
                         </svg>
                     </div>
                     <form method="post" th:action="@{/registration}"
-                          th:object="${userDTO}">
+                          th:object="${userDto}">
                         <input class="form-control my-4 py-2" placeholder="Имя"
-                               required th:field="${userDTO.username}"
+                               required th:field="${userDto.username}"
                                type="text">
                         <p th:errorclass="text-danger"
-                           th:errors="${userDTO.username}"
+                           th:errors="${userDto.username}"
                            th:if="${#fields.hasErrors('username')}"></p>
                         <input class="form-control my-4 py-2"
                                placeholder="Почта"
-                               required th:field="${userDTO.email}"
+                               required th:field="${userDto.email}"
                                type="email">
                         <p th:errorclass="text-danger"
-                           th:errors="${userDTO.email}"
+                           th:errors="${userDto.email}"
                            th:if="${#fields.hasErrors('email')}"></p>
                         <input class="form-control my-4 py-2"
                                placeholder="Пароль"
                                required
-                               th:field="${userDTO.password}" type="password">
+                               th:field="${userDto.password}" type="password">
                         <p th:errorclass="text-danger"
-                           th:errors="${userDTO.password}"
+                           th:errors="${userDto.password}"
                            th:if="${#fields.hasErrors('password')}"></p>
                         <div class="text-center mt-3">
                             <button class="btn btn-primary btn-custom"

@@ -1,6 +1,6 @@
 package com.heisyenberg.springbookshop.models;
 
-import com.heisyenberg.springbookshop.dtos.BookDTO;
+import com.heisyenberg.springbookshop.dtos.BookDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class Book {
     private String description;
     private String imageName;
 
-    public Book(BookDTO bookDTO) {
+    public Book(BookDto bookDTO) {
         title = bookDTO.getTitle();
         author = bookDTO.getAuthor();
         genre = bookDTO.getGenre();

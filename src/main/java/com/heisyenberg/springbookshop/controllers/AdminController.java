@@ -1,6 +1,6 @@
 package com.heisyenberg.springbookshop.controllers;
 
-import com.heisyenberg.springbookshop.dtos.BookDTO;
+import com.heisyenberg.springbookshop.dtos.BookDto;
 import com.heisyenberg.springbookshop.models.Book;
 import com.heisyenberg.springbookshop.services.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +27,22 @@ public class AdminController {
     }
 
     @GetMapping("/addBook")
-    public String showAddBookPage(@ModelAttribute("bookDTO") BookDTO bookDTO) {
+    public String showAddBookPage(@ModelAttribute("bookDto") BookDto bookDto) {
         return "add-book";
     }
 
     @PostMapping("/addBook")
-    public String addBook(@Valid @ModelAttribute("bookDTO") BookDTO bookDTO,
+    public String addBook(@Valid @ModelAttribute("bookDto") BookDto bookDto,
                           BindingResult result) {
-        if (bookDTO.getImageFile().isEmpty()) {
-            result.addError(new FieldError("bookDTO", "imageFile",
+        if (bookDto.getImageFile().isEmpty()) {
+            result.addError(new FieldError("bookDto", "imageFile",
                     "Изображение не было загружено"));
         }
         if (result.hasErrors()) {
             return "add-book";
         }
-        bookDTO.loadImageFile();
-        Book book = new Book(bookDTO);
-        booksService.saveBook(book);
+        Book book = new Book(bookDto);
+        booksService.saveBook(book, bookDto.getImageFile());
         return "redirect:/books";
     }
 
@@ -51,23 +50,20 @@ public class AdminController {
     public String showEditBookPage(@PathVariable("bookId") Long bookId,
                                    Model model) {
         Book book = booksService.getBook(bookId);
-        model.addAttribute("bookDTO", new BookDTO(book));
+        model.addAttribute("bookDto", new BookDto(book));
         return "edit-book";
     }
 
     @PostMapping("/editBook/{bookId}")
     public String editBookPage(@PathVariable("bookId") Long bookId,
-                               @Valid @ModelAttribute("bookDTO") BookDTO bookDTO,
+                               @Valid @ModelAttribute("bookDto") BookDto bookDto,
                                BindingResult result) {
         if (result.hasErrors()) {
             return "edit-book";
         }
-        if (!bookDTO.getImageFile().isEmpty()) {
-            bookDTO.reUploadImageFile();
-        }
-        Book book = new Book(bookDTO);
+        Book book = new Book(bookDto);
         book.setId(bookId);
-        booksService.saveBook(book);
+        booksService.updateBook(book, bookDto.getImageFile());
         return "redirect:/books";
     }
 

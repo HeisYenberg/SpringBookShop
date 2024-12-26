@@ -1,5 +1,6 @@
 package com.heisyenberg.springbookshop.services;
 
+import com.heisyenberg.springbookshop.helpers.ImagesFilesHelper;
 import com.heisyenberg.springbookshop.models.Book;
 import com.heisyenberg.springbookshop.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
+
+import static com.heisyenberg.springbookshop.helpers.ImagesFilesHelper.loadImage;
+import static com.heisyenberg.springbookshop.helpers.ImagesFilesHelper.reloadImage;
 
 @Service
 public class BooksService {
@@ -35,7 +36,15 @@ public class BooksService {
         return booksRepository.findBySearch(search, pageable);
     }
 
-    public void saveBook(Book book) {
+    public void saveBook(Book book, MultipartFile image) {
+        book.setImageName(loadImage(image));
+        booksRepository.save(book);
+    }
+
+    public void updateBook(Book book, MultipartFile image) {
+        if (!image.isEmpty()) {
+            book.setImageName(reloadImage(book.getImageName(), image));
+        }
         booksRepository.save(book);
     }
 
@@ -43,12 +52,7 @@ public class BooksService {
     public void deleteBook(Long id) {
         Optional<Book> book = booksRepository.findById(id);
         book.orElseThrow(RuntimeException::new);
-        try {
-            Path path = Paths.get("public/images/" + book.get().getImageName());
-            Files.delete(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        ImagesFilesHelper.deleteImage(book.get().getImageName());
         booksRepository.delete(book.get());
     }
 }

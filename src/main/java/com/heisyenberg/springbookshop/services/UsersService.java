@@ -26,12 +26,13 @@ public class UsersService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        Optional<User> user = usersRepository.findUserByEmail(email);
+        Optional<User> user = usersRepository.findUserByEmail(email.toLowerCase());
         user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return user.get();
     }
 
     public void register(User user) {
+        user.setEmail(user.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }

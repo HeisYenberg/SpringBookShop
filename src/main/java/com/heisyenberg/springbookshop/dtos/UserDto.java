@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDTO {
+public class UserDto {
     @Size(min = 3, max = 20,
             message = "Длина имени должен быть от 3 до 20 символов")
     private String username;

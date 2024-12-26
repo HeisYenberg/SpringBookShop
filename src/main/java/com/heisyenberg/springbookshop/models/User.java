@@ -1,6 +1,6 @@
 package com.heisyenberg.springbookshop.models;
 
-import com.heisyenberg.springbookshop.dtos.UserDTO;
+import com.heisyenberg.springbookshop.dtos.UserDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(UserDTO userDTO) {
+    public User(UserDto userDTO) {
         this.username = userDTO.getUsername();
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
