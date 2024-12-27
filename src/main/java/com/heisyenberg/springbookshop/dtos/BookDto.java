@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @NoArgsConstructor
@@ -24,8 +25,8 @@ public class BookDto {
     private String author;
     @NotEmpty(message = "Необходимо указать жанр")
     private String genre;
-    @NotEmpty(message = "Необходимо указать цену")
-    @Min(0)
+    @NotNull(message = "Необходимо указать цену")
+    @Min(value = 100, message = "Минимальная цена от 100 рублей")
     private Double price;
     @Size(min = 10, max = 500,
             message = "Описание должно быть в пределах от 10 до 500 символов")
