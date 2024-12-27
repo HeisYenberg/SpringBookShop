@@ -24,6 +24,7 @@ public class BookDto {
     private String author;
     @NotEmpty(message = "Необходимо указать жанр")
     private String genre;
+    @NotEmpty(message = "Необходимо указать цену")
     @Min(0)
     private Double price;
     @Size(min = 10, max = 500,
