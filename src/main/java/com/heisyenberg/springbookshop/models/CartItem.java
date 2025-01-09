@@ -1,8 +1,7 @@
 package com.heisyenberg.springbookshop.models;
 
-import lombok.*;
-
 import javax.persistence.*;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor

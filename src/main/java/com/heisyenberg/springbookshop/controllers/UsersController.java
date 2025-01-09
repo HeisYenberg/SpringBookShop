@@ -16,32 +16,31 @@ import javax.validation.Valid;
 
 @Controller
 public class UsersController {
-    private final UsersService usersService;
+  private final UsersService usersService;
 
-    @Autowired
-    public UsersController(UsersService usersService) {
-        this.usersService = usersService;
-    }
+  @Autowired
+  public UsersController(UsersService usersService) {
+    this.usersService = usersService;
+  }
 
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("userDto") UserDto userDto) {
-        return "registration";
-    }
+  @GetMapping("/registration")
+  public String registrationPage(@ModelAttribute("userDto") UserDto userDto) {
+    return "registration";
+  }
 
-    @PostMapping("/registration")
-    public String registration(
-            @Valid @ModelAttribute("userDto") UserDto userDto,
-            BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return "registration";
-        }
-        try {
-            usersService.register(new User(userDto));
-        } catch (DataIntegrityViolationException e) {
-            bindingResult.addError(new FieldError("userDto", "email",
-                    "Данная почта уже зарегистрирована"));
-            return "registration";
-        }
-        return "redirect:/login";
+  @PostMapping("/registration")
+  public String registration(
+      @Valid @ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult) {
+    if (bindingResult.hasFieldErrors()) {
+      return "registration";
     }
+    try {
+      usersService.register(new User(userDto));
+    } catch (DataIntegrityViolationException e) {
+      bindingResult.addError(
+          new FieldError("userDto", "email", "Данная почта уже зарегистрирована"));
+      return "registration";
+    }
+    return "redirect:/login";
+  }
 }

@@ -1,7 +1,5 @@
 package com.heisyenberg.springbookshop.helpers;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -9,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ImagesFilesHelper {
     private final static String IMAGES_FOLDER = "public/images/";

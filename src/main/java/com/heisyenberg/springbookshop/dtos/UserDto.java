@@ -14,13 +14,13 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class UserDto {
-    @Size(min = 3, max = 20,
-            message = "Длина имени должен быть от 3 до 20 символов")
-    private String username;
-    @NotEmpty(message = "Поле не должно быть пустым")
-    @Email(message = "Укажите адрес электронной почты")
-    private String email;
-    @Size(min = 8, max = 30,
-            message = "Длина пароля должен быть от 8 до 30 символов")
-    private String password;
+  @Size(min = 3, max = 20, message = "Длина имени должен быть от 3 до 20 символов")
+  private String username;
+
+  @NotEmpty(message = "Поле не должно быть пустым")
+  @Email(message = "Укажите адрес электронной почты")
+  private String email;
+
+  @Size(min = 8, max = 30, message = "Длина пароля должен быть от 8 до 30 символов")
+  private String password;
 }

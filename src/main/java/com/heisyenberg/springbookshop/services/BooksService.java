@@ -17,42 +17,42 @@ import static com.heisyenberg.springbookshop.helpers.ImagesFilesHelper.reloadIma
 
 @Service
 public class BooksService {
-    private final BooksRepository booksRepository;
+  private final BooksRepository booksRepository;
 
-    @Autowired
-    public BooksService(BooksRepository booksRepository) {
-        this.booksRepository = booksRepository;
-    }
+  @Autowired
+  public BooksService(BooksRepository booksRepository) {
+    this.booksRepository = booksRepository;
+  }
 
-    public Page<Book> getBooks(Pageable pageable) {
-        return booksRepository.findAll(pageable);
-    }
+  public Page<Book> getBooks(Pageable pageable) {
+    return booksRepository.findAll(pageable);
+  }
 
-    public Book getBook(Long id) {
-        return booksRepository.getReferenceById(id);
-    }
+  public Book getBook(Long id) {
+    return booksRepository.getReferenceById(id);
+  }
 
-    public Page<Book> searchBooks(String search, Pageable pageable) {
-        return booksRepository.findBySearch(search, pageable);
-    }
+  public Page<Book> searchBooks(String search, Pageable pageable) {
+    return booksRepository.findBySearch(search, pageable);
+  }
 
-    public void saveBook(Book book, MultipartFile image) {
-        book.setImageName(loadImage(image));
-        booksRepository.save(book);
-    }
+  public void saveBook(Book book, MultipartFile image) {
+    book.setImageName(loadImage(image));
+    booksRepository.save(book);
+  }
 
-    public void updateBook(Book book, MultipartFile image) {
-        if (!image.isEmpty()) {
-            book.setImageName(reloadImage(book.getImageName(), image));
-        }
-        booksRepository.save(book);
+  public void updateBook(Book book, MultipartFile image) {
+    if (!image.isEmpty()) {
+      book.setImageName(reloadImage(book.getImageName(), image));
     }
+    booksRepository.save(book);
+  }
 
-    @Transactional
-    public void deleteBook(Long id) {
-        Optional<Book> book = booksRepository.findById(id);
-        book.orElseThrow(RuntimeException::new);
-        ImagesFilesHelper.deleteImage(book.get().getImageName());
-        booksRepository.delete(book.get());
-    }
+  @Transactional
+  public void deleteBook(Long id) {
+    Optional<Book> book = booksRepository.findById(id);
+    book.orElseThrow(RuntimeException::new);
+    ImagesFilesHelper.deleteImage(book.get().getImageName());
+    booksRepository.delete(book.get());
+  }
 }

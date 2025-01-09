@@ -3,6 +3,8 @@ package com.heisyenberg.springbookshop.controllers;
 import com.heisyenberg.springbookshop.models.CartItem;
 import com.heisyenberg.springbookshop.models.User;
 import com.heisyenberg.springbookshop.services.CartItemsService;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class CartItemsController {

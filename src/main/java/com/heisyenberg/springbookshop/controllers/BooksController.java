@@ -21,57 +21,58 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class BooksController {
-    private final BooksService booksService;
-    private final CartItemsService cartItemsService;
+  private final BooksService booksService;
+  private final CartItemsService cartItemsService;
 
-    @Autowired
-    public BooksController(BooksService booksService,
-                           CartItemsService cartItemsService) {
-        this.booksService = booksService;
-        this.cartItemsService = cartItemsService;
-    }
+  @Autowired
+  public BooksController(BooksService booksService, CartItemsService cartItemsService) {
+    this.booksService = booksService;
+    this.cartItemsService = cartItemsService;
+  }
 
-    @GetMapping(path = {"/", "/home"})
-    public String getHomePage() {
-        return "redirect:/books";
-    }
+  @GetMapping(path = {"/", "/home"})
+  public String getHomePage() {
+    return "redirect:/books";
+  }
 
-    @GetMapping("/books")
-    public String getBooks(HttpSession session, Model model,
-                           @RequestParam(defaultValue = "0") int page,
-                           @RequestParam(defaultValue = "18") int size,
-                           @AuthenticationPrincipal User user) {
-        session.setAttribute("cartItemsCount",
-                cartItemsService.getCartItemsCount(user));
-        Sort sort = Sort.by("id").descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Book> books = booksService.getBooks(pageable);
-        model.addAttribute("books", books);
-        return "books";
-    }
+  @GetMapping("/books")
+  public String getBooks(
+      HttpSession session,
+      Model model,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "18") int size,
+      @AuthenticationPrincipal User user) {
+    session.setAttribute("cartItemsCount", cartItemsService.getCartItemsCount(user));
+    Sort sort = Sort.by("id").descending();
+    Pageable pageable = PageRequest.of(page, size, sort);
+    Page<Book> books = booksService.getBooks(pageable);
+    model.addAttribute("books", books);
+    return "books";
+  }
 
-    @GetMapping("/book/{id}")
-    public String showBook(@PathVariable("id") Long id, Model model) {
-        Book book = booksService.getBook(id);
-        model.addAttribute("book", book);
-        return "book";
-    }
+  @GetMapping("/book/{id}")
+  public String showBook(@PathVariable("id") Long id, Model model) {
+    Book book = booksService.getBook(id);
+    model.addAttribute("book", book);
+    return "book";
+  }
 
-    @GetMapping("/search")
-    public String searchBooks(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "18") int size,
-                              @RequestParam(value = "query") String query,
-                              Model model,
-                              RedirectAttributes redirectAttributes) {
-        Sort sort = Sort.by("id").descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Book> books = booksService.searchBooks(query, pageable);
-        if (books.getContent().isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage",
-                    "К сожалению, по вашему запросу книг не найдено.");
-            return "redirect:/books";
-        }
-        model.addAttribute("books", books);
-        return "books";
+  @GetMapping("/search")
+  public String searchBooks(
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "18") int size,
+      @RequestParam(value = "query") String query,
+      Model model,
+      RedirectAttributes redirectAttributes) {
+    Sort sort = Sort.by("id").descending();
+    Pageable pageable = PageRequest.of(page, size, sort);
+    Page<Book> books = booksService.searchBooks(query, pageable);
+    if (books.getContent().isEmpty()) {
+      redirectAttributes.addFlashAttribute(
+          "errorMessage", "К сожалению, по вашему запросу книг не найдено.");
+      return "redirect:/books";
     }
+    model.addAttribute("books", books);
+    return "books";
+  }
 }

@@ -12,37 +12,55 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+  private final UserDetailsService userDetailsService;
+  private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public WebSecurityConfig(UserDetailsService userDetailsService,
-                             PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
+  @Autowired
+  public WebSecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    this.userDetailsService = userDetailsService;
+    this.passwordEncoder = passwordEncoder;
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/addBook", "/editBook/*", "/deleteBook/*")
-                .hasRole("ADMIN")
-                .antMatchers("/", "/books", "/book/*", "/search", "/error",
-                        "/css/*", "/resources/**", "/images/**", "/logo.png")
-                .permitAll()
-                .anyRequest().hasRole("USER")
-                .and()
-                .formLogin().loginPage("/login").usernameParameter("email")
-                .defaultSuccessUrl("/books").permitAll()
-                .and().exceptionHandling().accessDeniedPage("/access-denied")
-                .and().logout().permitAll().logoutSuccessUrl("/");
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers("/registration")
+        .not()
+        .fullyAuthenticated()
+        .antMatchers("/addBook", "/editBook/*", "/deleteBook/*")
+        .hasRole("ADMIN")
+        .antMatchers(
+            "/",
+            "/books",
+            "/book/*",
+            "/search",
+            "/error",
+            "/css/*",
+            "/resources/**",
+            "/images/**",
+            "/logo.png")
+        .permitAll()
+        .anyRequest()
+        .hasRole("USER")
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .usernameParameter("email")
+        .defaultSuccessUrl("/books")
+        .permitAll()
+        .and()
+        .exceptionHandling()
+        .accessDeniedPage("/access-denied")
+        .and()
+        .logout()
+        .permitAll()
+        .logoutSuccessUrl("/");
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+  }
 }

@@ -13,27 +13,25 @@ import java.util.Optional;
 
 @Service
 public class UsersService implements UserDetailsService {
-    private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
+  private final UsersRepository usersRepository;
+  private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UsersService(UsersRepository usersRepository,
-                        PasswordEncoder passwordEncoder) {
-        this.usersRepository = usersRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+  @Autowired
+  public UsersService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
+    this.usersRepository = usersRepository;
+    this.passwordEncoder = passwordEncoder;
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-        Optional<User> user = usersRepository.findUserByEmail(email.toLowerCase());
-        user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return user.get();
-    }
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Optional<User> user = usersRepository.findUserByEmail(email.toLowerCase());
+    user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    return user.get();
+  }
 
-    public void register(User user) {
-        user.setEmail(user.getEmail().toLowerCase());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        usersRepository.save(user);
-    }
+  public void register(User user) {
+    user.setEmail(user.getEmail().toLowerCase());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    usersRepository.save(user);
+  }
 }

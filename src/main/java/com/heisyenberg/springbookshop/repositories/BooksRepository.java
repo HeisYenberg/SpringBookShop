@@ -10,9 +10,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BooksRepository extends JpaRepository<Book, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM books " +
-            "WHERE title ILIKE '%' || :search || '%' " +
-            "OR author ILIKE '%' || :search || '%' " +
-            "OR genre ILIKE '%' || :search || '%'")
-    Page<Book> findBySearch(@Param("search") String search, Pageable pageable);
+  @Query(
+      nativeQuery = true,
+      value =
+          "SELECT * FROM books "
+              + "WHERE title ILIKE '%' || :search || '%' "
+              + "OR author ILIKE '%' || :search || '%' "
+              + "OR genre ILIKE '%' || :search || '%'")
+  Page<Book> findBySearch(@Param("search") String search, Pageable pageable);
 }
